@@ -56,7 +56,9 @@ Le développeur n'a pas à choisir quel Skill ou Sous-agent activer. Dès qu'il 
 
 ---
 
-## 6. Confidentialité, OPSEC & Anonymat Externe (Tolérance Zéro)
+## 6. Confidentialité, OPSEC, Anonymat & Isolation des Dépôts GitHub (Tolérance Zéro)
+- **Règle « 1 Produit / Projet = 1 Dépôt GitHub Dédié »** :
+  - **Interdiction absolue** de mélanger deux projets ou produits différents dans un même dépôt Git/GitHub. Chaque nouveau produit ou application (ex. SaaS B2B vs Application Mobile Unity 3D) DOIT avoir son propre dépôt Git isolé, son propre pipeline CI/CD et son propre déploiement.
 - **Zéro Divulgation d'Informations Personnelles (PII Développeur/Fondateur)** :
   - **Interdiction absolue** d'exposer le nom, prénom, adresse email personnelle (`@gmail.com`, etc.), numéro de téléphone ou chemin local (`C:\Users\<nom>`) de l'utilisateur dans le code source, les fichiers HTML/Markdown publics, les scripts ou les métadonnées des commits Git poussés sur GitHub ou tout service externe.
 - **Identité Git & GitHub Anonymisée** :

@@ -39,3 +39,6 @@ secrets.json
 # OS generated
 .DS_Store
 Thumbs.db
+
+# Standalone Product Repositories
+10-super-learner-unity3d-playstore/
