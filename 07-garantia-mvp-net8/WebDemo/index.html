@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GarantIA — Comparateur B2B Mutuelle Santé & Conformité DDA / ANI en 30s</title>
+  <meta name="description" content="Transformez 2 tableaux de garanties PDF en un comparatif mutuelle santé conforme DDA (Article L.521-4) et ANI (100% Santé, BRSS, Forfaits €) prêt à signer en 30 secondes." />
+  <meta name="keywords" content="comparateur mutuelle santé B2B, courtier assurance santé, devoir de conseil DDA L521-4, conformité ANI 125% BRSS, tableau de garanties PDF, contrat responsable URSSAF" />
+  <link rel="canonical" href="https://rabahadel.github.io/garantia-studio/" />
+  <meta property="og:title" content="GarantIA — Comparateur B2B Mutuelle Santé & Conformité DDA / ANI en 30s" />
+  <meta property="og:description" content="Transformez 2 tableaux de garanties PDF en un comparatif conforme DDA prêt à signer en 30 secondes. Zéro saisie manuelle, alerte ANI-DENT-125 et anonymisation RGPD." />
+  <meta property="og:url" content="https://rabahadel.github.io/garantia-studio/" />
+  <meta property="og:type" content="website" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "GarantIA Studio B2B",
+    "url": "https://rabahadel.github.io/garantia-studio/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Comparateur B2B de tableaux de garanties mutuelle santé avec contrôle de conformité ANI (125% BRSS) et génération automatique de la synthèse Devoir de Conseil DDA (Article L.521-4).",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Offre Solo Découverte",
+        "price": "49.00",
+        "priceCurrency": "EUR"
+      },
+      {
+        "@type": "Offer",
+        "name": "Offre Cabinet Pro Illimitée",
+        "price": "250.00",
+        "priceCurrency": "EUR"
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg-dark: #0b1120;
+      --bg-card: #111827;
+      --bg-surface: #1e293b;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #6366f1;
+      --green: #10b981;
+      --green-bg: rgba(16, 185, 129, 0.14);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.14);
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.16);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 4rem;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .security-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .pill strong {
+      color: var(--text-main);
+    }
+
+    .pill.rgpd {
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+    }
+
+    .pill.finops {
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HERO SMOKE TEST */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 1rem 2.5rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      max-width: 920px;
+      margin: 0 auto 1rem;
+      line-height: 1.18;
+      background: linear-gradient(90deg, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 720px;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* SCENARIO SELECTOR */
+    .scenario-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .scenario-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      text-align: left;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .scenario-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .scenario-btn.active {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.12);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+
+    .scenario-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      margin-bottom: 0.35rem;
+      color: #93c5fd;
+    }
+
+    .scenario-btn.danger .scenario-tag {
+      color: #fca5a5;
+    }
+
+    .scenario-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .scenario-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* CUSTOM INPUT PANEL (SCENARIO 3) */
+    .custom-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .custom-panel.visible {
+      display: block;
+    }
+
+    .custom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    /* MAIN SIMULATOR WORKSPACE */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    /* VERDICT BANNER */
+    .verdict-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.15rem 1.4rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      background: var(--bg-surface);
+      border-left: 5px solid var(--primary);
+    }
+
+    .verdict-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .verdict-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-top: 0.15rem;
+    }
+
+    /* ALERT BOX ANI */
+    .ani-alerts {
+      margin-bottom: 1.25rem;
+    }
+
+    .alert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .alert-item.critique {
+      background: var(--red-bg);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fecaca;
+    }
+
+    .alert-item.ok {
+      background: var(--green-bg);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #a7f3d0;
+    }
+
+    /* COMPARISON TABLE */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+
+    .comp-table th,
+    .comp-table td {
+      padding: 0.9rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+    }
+
+    .comp-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .badge.green {
+      background: var(--green-bg);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .badge.amber {
+      background: var(--amber-bg);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .badge.red {
+      background: var(--red-bg);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    /* DDA & RGPD SIDEBAR */
+    .dda-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      white-space: pre-line;
+      margin: 0.85rem 0 1rem;
+      line-height: 1.55;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.8rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-solo {
+      background: var(--bg-surface);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      margin-bottom: 0.65rem;
+    }
+
+    .btn-solo:hover {
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-cta {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-size: 0.94rem;
+      padding: 0.92rem 1.1rem;
+      box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-cta:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .rgpd-log {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.76rem;
+      background: #090d16;
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 8px;
+      color: #94a3b8;
+      margin-top: 1rem;
+    }
+
+    .rgpd-log span.masked {
+      color: #34d399;
+      font-weight: 700;
+    }
+
+    /* TRACTION SENSOR CARD */
+    .traction-card {
+      margin-top: 1.25rem;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(17, 24, 39, 0.95));
+    }
+
+    .traction-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .toast {
+      display: none;
+      margin-top: 0.65rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: center;
+      background: var(--green-bg);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    /* LABORATOIRE — VOTEZ POUR VOTRE SECTEUR */
+    .lab-section {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .lab-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lab-vote-btn {
+      margin-top: 1rem;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .lab-vote-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* SEO FOOTER */
+    .seo-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .seo-links {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .seo-links a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .seo-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand">
+      <span>🛡️ GarantIA</span>
+      <span class="brand-badge">MVP .NET 8 • B2B</span>
+    </div>
+    <div class="security-pills">
+      <div class="pill rgpd">🔒 Filtre RGPD Regex : <strong id="rgpdStatus">[NIR-MASQUE-RGPD] Actif</strong></div>
+      <div class="pill finops">⚡ Cache FinOps SHA-256 : <strong id="finopsCost">HIT (0,00 €)</strong></div>
+      <div class="pill">🏢 Tenant : <strong>CABINET-COURTAGE-DEMO</strong></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. HERO LANDING PAGE SMOKE TEST -->
+    <section class="hero">
+      <span class="eyebrow">🚀 Démo Interactive 30 Secondes • Courtiers & Assureurs Collectifs</span>
+      <h1>Transformez 2 tableaux de garanties PDF en un comparatif conforme DDA prêt à signer en 30 secondes</h1>
+      <p>
+        Zéro saisie manuelle. Détection immédiate des non-conformités <strong>ANI / Panier 100% Santé</strong>,
+        normalisation <strong>% BRSS vs Forfait €</strong> et génération automatique du paragraphe de <strong>Devoir de Conseil (Article L521-4)</strong>.
+      </p>
+    </section>
+
+    <!-- 2. BOUTONS DE SCÉNARIOS EN 1 CLIC -->
+    <section class="scenario-bar" aria-label="Choix du scénario de démonstration">
+      <button class="scenario-btn active" id="btnScen1" onclick="selectScenario(1)">
+        <span class="scenario-tag">Scénario 1 • Cas Standard PME</span>
+        <div class="scenario-title">Syntec Actuel vs SwissLife Niveau 3 [+276 €/an]</div>
+        <div class="scenario-desc">Hausse tarifaire compensée par +75% BRSS en soins courants et +150 € en optique.</div>
+      </button>
+
+      <button class="scenario-btn danger" id="btnScen2" onclick="selectScenario(2)">
+        <span class="scenario-tag">Scénario 2 • Alerte Juridique URSSAF</span>
+        <div class="scenario-title">Contrat Non-Conforme ANI Dentaire 100% BRSS</div>
+        <div class="scenario-desc">Déclenchement immédiat de l'Alerte Rouge <strong>[ANI-DENT-125]</strong> (Plancher légal 125% BRSS).</div>
+      </button>
+
+      <button class="scenario-btn" id="btnScen3" onclick="selectScenario(3)">
+        <span class="scenario-tag">Scénario 3 • Simulateur Temps Réel</span>
+        <div class="scenario-title">Saisie personnalisée BRSS / Forfaits € & Cotisations</div>
+        <div class="scenario-desc">Testez vos propres garanties et observez le moteur déterministe recalculer en direct.</div>
+      </button>
+    </section>
+
+    <!-- PANNEAU SAISIE PERSONNALISÉE (SCÉNARIO 3) -->
+    <section class="custom-panel" id="customPanel">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1rem;">⚙️ Paramètres personnalisés du comparatif (Calcul Déterministe Temps Réel)</h3>
+        <span class="badge green">Moteur C# / JS Zéro Hallucination</span>
+      </div>
+      <div class="custom-grid">
+        <div class="form-group">
+          <label>Cotisation Actuelle (€ / mois)</label>
+          <input type="number" id="inpCotAct" value="62" oninput="recalcCustom()" />
+        </div>
+        <div class="form-group">
+          <label>Cotisation Proposée (€ / mois)</label>
+          <input type="number" id="inpCotProp" value="85" oninput="recalcCustom()" />
+        </div>
+        <div class="form-group">
+          <label>Consultation Spécialiste Actuel (% BRSS)</label>
+          <input type="number" id="inpConsAct" value="125" oninput="recalcCustom()" />
+        </div>
+        <div class="form-group">
+          <label>Consultation Spécialiste Proposé (% BRSS)</label>
+          <input type="number" id="inpConsProp" value="200" oninput="recalcCustom()" />
+        </div>
+        <div class="form-group">
+          <label>Prothèses Dentaires Proposé (% BRSS — Min ANI 125%)</label>
+          <input type="number" id="inpDentProp" value="150" oninput="recalcCustom()" />
+        </div>
+        <div class="form-group">
+          <label>Optique Verres Complexes Proposé (Forfait €)</label>
+          <input type="number" id="inpOptProp" value="350" oninput="recalcCustom()" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ESPACE RÉSULTATS & DDA -->
+    <div class="workspace-grid">
+      <!-- COLONNE GAUCHE : VERDICT, ALERTES ANI, TABLEAU COMPARATIF -->
+      <div class="card">
+        <div class="verdict-banner" id="verdictBanner">
+          <div>
+            <div class="verdict-title">Verdict Économique Annuel (Salarié Isolé)</div>
+            <div class="verdict-value" id="verdictText">+276,00 € / an (+23,00 € / mois)</div>
+          </div>
+          <span class="badge amber" id="verdictBadge">Hausse tarifaire • Mieux-disant technique</span>
+        </div>
+
+        <!-- ALERTES CONFORMITÉ ANI -->
+        <div class="ani-alerts" id="aniContainer"></div>
+
+        <!-- TABLEAU COMPARATIF CÔTE À CÔTE -->
+        <h3 style="font-size:0.95rem; margin-bottom:0.4rem; color:var(--text-muted);">
+          Comparatif Normalisé des Garanties (Base de Remboursement Sécurité Sociale & Forfaits)
+        </h3>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Poste de Soins</th>
+              <th id="colActuelTitle">Contrat Actuel</th>
+              <th id="colProposeTitle">Contrat Proposé</th>
+              <th>Écart & Analyse Métier</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonBody">
+            <!-- Injecté dynamiquement par JS -->
+          </tbody>
+        </table>
+
+        <!-- TRACE RGPD ZERO DATA RETENTION -->
+        <div class="rgpd-log">
+          <div>🛡️ <strong>Journal d'Anonymisation Pre-Cloud (PiiAnonymizer) :</strong></div>
+          <div id="rgpdPreview">
+            Document source nettoyé avant analyse : Assuré M. Jean Dupont — N° SS : <span class="masked">[NIR-MASQUE-RGPD]</span> — Téléphone : <span class="masked">[TEL-MASQUE-RGPD]</span> | Empreinte SHA-256 : <code>8f94e2c0...a41b</code> (Coût API LLM : <strong>0,00 €</strong>)
+          </div>
+        </div>
+      </div>
+
+      <!-- COLONNE DROITE : SYNTHÈSE DDA + CAPTEUR DE TRACTION MARCHÉ -->
+      <div>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:1.02rem;">📋 Synthèse Devoir de Conseil (DDA)</h3>
+            <span class="badge green">Art. L521-4 C. Assurances</span>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">
+            Prête à coller dans votre Fiche d'Information et de Conseil (FIC) ou email client :
+          </p>
+
+          <div class="dda-box" id="ddaText"></div>
+
+          <button class="btn btn-primary" onclick="copyDdaSynthesis()">
+            📋 Copier la Synthèse Devoir de Conseil (DDA)
+          </button>
+          <div class="toast" id="copyToast">✅ Synthèse DDA copiée dans le presse-papiers !</div>
+        </div>
+
+        <!-- 3. CAPTEUR DE TRACTION MARCHÉ (SMOKE TEST + MAILTO DIRECT) -->
+        <div class="card traction-card">
+          <span class="scenario-tag" style="color:#34d399;">Offres Accès Direct • Sans Engagement</span>
+          <h3 style="font-size:1.1rem; margin-bottom:0.4rem;">Industrialisez vos études comparatives B2B</h3>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem;">
+            Import PDF multi-pages, détection automatique des grilles CCN (Syntec, Métallurgie, HCR), export Word/PDF aux couleurs de votre cabinet.
+          </p>
+
+          <button class="btn btn-solo" onclick="recordPurchaseIntent('Solo 49€ HT/mois')">
+            ⚡ Offre Solo Découverte — 49 € HT/mois (15 études/mois)
+          </button>
+
+          <button class="btn btn-cta" onclick="recordPurchaseIntent('Cabinet Pro 250€ HT/mois')">
+            🚀 Offre Cabinet Pro Illimitée — 250 € HT/mois
+          </button>
+
+          <div class="toast" id="intentToast">
+            🎉 Demande d'accès préparée par email !
+          </div>
+
+          <div class="traction-metrics">
+            <span>🔥 Intentions d'achat : <strong id="intentCount" style="color:#34d399;">0</strong></span>
+            <span>📋 Synthèses DDA copiées : <strong id="copyCount" style="color:#93c5fd;">0</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. LABORATOIRE — VOTEZ POUR VOTRE SECTEUR -->
+    <section class="lab-section" aria-label="Laboratoire — Votez pour votre secteur">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+        <div>
+          <span class="scenario-tag">🔬 Laboratoire Produit B2B • Priorisation R&D</span>
+          <h2 style="font-size:1.35rem; font-weight:800;">Laboratoire — Votez pour votre secteur prioritaire</h2>
+          <p style="font-size:0.9rem; color:var(--text-muted);">
+            Quel moteur d'audit documentaire IA déterministe souhaitez-vous utiliser en priorité dans votre activité quotidienne ?
+          </p>
+        </div>
+        <span class="badge green" id="labFeedbackBadge">Vote en 1 clic sans inscription</span>
+      </div>
+
+      <div class="lab-grid">
+        <div class="lab-card">
+          <div>
+            <span class="badge green" style="margin-bottom:0.5rem;">1. Assurance & Courtage</span>
+            <h3 style="font-size:1.05rem;">Courtiers & Mutuelles (GarantIA)</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-top:0.35rem;">
+              Comparaison instantanée de tableaux de garanties PDF, alerte ANI 125% BRSS et rédaction automatique du Devoir de Conseil DDA.
+            </p>
+          </div>
+          <button class="lab-vote-btn" onclick="voteSector('garantia', 'Courtiers & Mutuelles (GarantIA)')">
+            👍 Voter pour GarantIA (<span id="vote_garantia">14</span> votes)
+          </button>
+        </div>
+
+        <div class="lab-card">
+          <div>
+            <span class="badge amber" style="margin-bottom:0.5rem;">2. Santé & Praticiens</span>
+            <h3 style="font-size:1.05rem;">Dentistes & Opticiens (MediCodageIA)</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-top:0.35rem;">
+              Calculateur instantané du Reste à Charge patient (RO + RC + Panier 100% Santé RAC 0) à partir de la carte mutuelle et du devis CCAM.
+            </p>
+          </div>
+          <button class="lab-vote-btn" onclick="voteSector('medicodage', 'Dentistes & Opticiens (MediCodageIA)')">
+            👍 Voter pour MediCodageIA (<span id="vote_medicodage">9</span> votes)
+          </button>
+        </div>
+
+        <div class="lab-card">
+          <div>
+            <span class="badge amber" style="margin-bottom:0.5rem;">3. Immobilier & Copropriété</span>
+            <h3 style="font-size:1.05rem;">Audit Copropriété Loi ALUR (SyndicAuditIA)</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-top:0.35rem;">
+              Audit automatique des PV d'Assemblée Générale, DTG et pré-état daté en 30 secondes pour notaires, syndics et négociateurs.
+            </p>
+          </div>
+          <button class="lab-vote-btn" onclick="voteSector('syndicaudit', 'Audit Copropriété Loi ALUR (SyndicAuditIA)')">
+            👍 Voter pour SyndicAuditIA (<span id="vote_syndicaudit">7</span> votes)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PIED DE PAGE SEO PROGRAMMATIQUE -->
+    <footer class="seo-footer">
+      <div>
+        <strong>🛡️ GarantIA Studio (.NET 8 • Architecture Zero-Data-Retention RGPD)</strong> — Contact : <a href="mailto:contact@garantia-studio.fr" style="color:#34d399;">contact@garantia-studio.fr</a>
+      </div>
+      <nav class="seo-links" aria-label="Outils Gratuits Courtiers & Mutuelles">
+        <a href="calculateur-brss-optique-dentaire.html">🧮 Calculateur BRSS, Ticket Modérateur & Reste à Charge 2026</a>
+        <a href="modele-devoir-conseil-dda.html">📋 Générateur & Modèle Fiche Devoir de Conseil DDA (Art. L.521-4)</a>
+        <a href="sitemap.xml">🗺️ Sitemap XML</a>
+      </nav>
+    </footer>
+  </main>
+
+  <script>
+    const SCENARIOS = {
+      1: {
+        actuelNom: "Syntec Base (Actuel)",
+        proposeNom: "SwissLife Santé Niveau 3",
+        cotActuel: 62,
+        cotPropose: 85,
+        aniConforme: true,
+        aniMessage: "✅ Conformité ANI & Contrat Responsable validée (Forfait journalier illimité, Prothèses dentaires >= 125% BRSS, Panier 100% Santé respecté).",
+        lignes: [
+          {
+            poste: "Hospitalisation — Forfait journalier",
+            actuel: "Frais réels (Illimité)",
+            propose: "Frais réels (Illimité)",
+            ecart: "Équivalent (Conforme ANI)",
+            badge: "amber"
+          },
+          {
+            poste: "Soins courants — Consultation Spécialiste OPTAM",
+            actuel: "125 % BRSS",
+            propose: "200 % BRSS",
+            ecart: "+75 % BRSS (Gain fort)",
+            badge: "green"
+          },
+          {
+            poste: "Dentaire — Prothèses dentaires hors 100% Santé",
+            actuel: "125 % BRSS",
+            propose: "175 % BRSS",
+            ecart: "+50 % BRSS (Gain fort)",
+            badge: "green"
+          },
+          {
+            poste: "Optique — Équipement verres complexes (Forfait 2 ans)",
+            actuel: "200,00 €",
+            propose: "350,00 €",
+            ecart: "+150,00 € (Mieux-disant)",
+            badge: "green"
+          }
+        ]
+      },
+      2: {
+        actuelNom: "Mutuelle CCN Actuelle",
+        proposeNom: "Offre Eco Low-Cost (Non-Conforme)",
+        cotActuel: 68,
+        cotPropose: 51,
+        aniConforme: false,
+        aniMessage: "🚨 ALERTE ROUGE [ANI-DENT-125] : Le poste Prothèses Dentaires proposé est à 100 % BRSS, inférieur au plancher légal ANI de 125 % BRSS (Décret n°2014-1025). Risque de redressement URSSAF sur l'exonération sociale employeur.",
+        lignes: [
+          {
+            poste: "Hospitalisation — Forfait journalier",
+            actuel: "Frais réels (Illimité)",
+            propose: "Frais réels (Illimité)",
+            ecart: "Équivalent (Conforme ANI)",
+            badge: "amber"
+          },
+          {
+            poste: "Soins courants — Consultation Spécialiste",
+            actuel: "150 % BRSS",
+            propose: "100 % BRSS",
+            ecart: "-50 % BRSS (Perte de couverture)",
+            badge: "red"
+          },
+          {
+            poste: "Dentaire — Prothèses dentaires (Plancher ANI 125%)",
+            actuel: "125 % BRSS",
+            propose: "100 % BRSS",
+            ecart: "-25 % BRSS [ILLÉGAL ANI-DENT-125]",
+            badge: "red"
+          },
+          {
+            poste: "Optique — Verres complexes",
+            actuel: "250,00 €",
+            propose: "200,00 €",
+            ecart: "-50,00 € (Moins-disant)",
+            badge: "red"
+          }
+        ]
+      }
+    };
+
+    let currentScenario = 1;
+
+    function initCounters() {
+      const savedIntent = parseInt(localStorage.getItem("garantia_smoke_intents") || "0", 10);
+      const savedCopies = parseInt(localStorage.getItem("garantia_dda_copies") || "0", 10);
+      document.getElementById("intentCount").textContent = savedIntent;
+      document.getElementById("copyCount").textContent = savedCopies;
+
+      ["garantia", "medicodage", "syndicaudit"].forEach((key) => {
+        const defaultBase = key === "garantia" ? 14 : key === "medicodage" ? 9 : 7;
+        const val = parseInt(localStorage.getItem("vote_" + key) || defaultBase.toString(), 10);
+        document.getElementById("vote_" + key).textContent = val;
+      });
+    }
+
+    function selectScenario(id) {
+      currentScenario = id;
+      document.querySelectorAll(".scenario-btn").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx + 1 === id);
+      });
+
+      const customPanel = document.getElementById("customPanel");
+      if (id === 3) {
+        customPanel.classList.add("visible");
+        recalcCustom();
+      } else {
+        customPanel.classList.remove("visible");
+        renderScenarioData(SCENARIOS[id]);
+      }
+    }
+
+    function recalcCustom() {
+      const cotAct = parseFloat(document.getElementById("inpCotAct").value) || 0;
+      const cotProp = parseFloat(document.getElementById("inpCotProp").value) || 0;
+      const consAct = parseFloat(document.getElementById("inpConsAct").value) || 100;
+      const consProp = parseFloat(document.getElementById("inpConsProp").value) || 100;
+      const dentProp = parseFloat(document.getElementById("inpDentProp").value) || 100;
+      const optProp = parseFloat(document.getElementById("inpOptProp").value) || 200;
+
+      const deltaCons = consProp - consAct;
+      const deltaDent = dentProp - 125;
+      const deltaOpt = optProp - 200;
+      const aniOk = dentProp >= 125 && optProp >= 200;
+
+      const customData = {
+        actuelNom: "Contrat Actuel (Saisi)",
+        proposeNom: "Simulation Sur-Mesure",
+        cotActuel: cotAct,
+        cotPropose: cotProp,
+        aniConforme: aniOk,
+        aniMessage: aniOk
+          ? "✅ Simulation conforme au panier minimal ANI (Dentaire >= 125 % BRSS et Optique >= 200 €)."
+          : "🚨 ALERTE ROUGE [ANI-DENT-125] : Garantie inférieure au minimum légal ANI (Dentaire < 125 % BRSS ou Optique < 200 €). Contrat non-responsable !",
+        lignes: [
+          {
+            poste: "Hospitalisation — Forfait journalier",
+            actuel: "Frais réels",
+            propose: "Frais réels",
+            ecart: "Conforme ANI",
+            badge: "amber"
+          },
+          {
+            poste: "Soins courants — Consultation Spécialiste",
+            actuel: `${consAct} % BRSS`,
+            propose: `${consProp} % BRSS`,
+            ecart: `${deltaCons >= 0 ? "+" : ""}${deltaCons} % BRSS`,
+            badge: deltaCons > 0 ? "green" : deltaCons < 0 ? "red" : "amber"
+          },
+          {
+            poste: "Dentaire — Prothèses dentaires",
+            actuel: "125 % BRSS",
+            propose: `${dentProp} % BRSS`,
+            ecart: dentProp < 125
+              ? `${deltaDent} % BRSS [ALERTE ANI-DENT-125]`
+              : `${deltaDent >= 0 ? "+" : ""}${deltaDent} % BRSS`,
+            badge: dentProp < 125 ? "red" : deltaDent > 0 ? "green" : "amber"
+          },
+          {
+            poste: "Optique — Verres complexes",
+            actuel: "200,00 €",
+            propose: `${optProp.toFixed(2)} €`,
+            ecart: `${deltaOpt >= 0 ? "+" : ""}${deltaOpt.toFixed(2)} €`,
+            badge: deltaOpt > 0 ? "green" : deltaOpt < 0 ? "red" : "amber"
+          }
+        ]
+      };
+
+      renderScenarioData(customData);
+    }
+
+    function renderScenarioData(data) {
+      const deltaMensuel = data.cotPropose - data.cotActuel;
+      const deltaAnnuel = deltaMensuel * 12;
+      const sign = deltaAnnuel >= 0 ? "+" : "";
+
+      document.getElementById("colActuelTitle").textContent = `${data.actuelNom} (${data.cotActuel} €/mois)`;
+      document.getElementById("colProposeTitle").textContent = `${data.proposeNom} (${data.cotPropose} €/mois)`;
+
+      const verdictText = document.getElementById("verdictText");
+      verdictText.textContent = `${sign}${deltaAnnuel.toFixed(2).replace(".", ",")} € / an (${sign}${deltaMensuel.toFixed(2).replace(".", ",")} € / mois)`;
+
+      const verdictBadge = document.getElementById("verdictBadge");
+      if (!data.aniConforme) {
+        verdictBadge.className = "badge red";
+        verdictBadge.textContent = "⛔ Risque Juridique ANI / URSSAF";
+      } else if (deltaAnnuel <= 0) {
+        verdictBadge.className = "badge green";
+        verdictBadge.textContent = "Économie nette & Conformité ANI";
+      } else {
+        verdictBadge.className = "badge amber";
+        verdictBadge.textContent = "Investissement garanties (+ couverture)";
+      }
+
+      // Alertes ANI
+      const aniContainer = document.getElementById("aniContainer");
+      aniContainer.innerHTML = `
+        <div class="alert-item ${data.aniConforme ? "ok" : "critique"}">
+          <div>${data.aniMessage}</div>
+        </div>
+      `;
+
+      // Tableau
+      const tbody = document.getElementById("comparisonBody");
+      tbody.innerHTML = data.lignes
+        .map(
+          (row) => `
+        <tr>
+          <td><strong>${row.poste}</strong></td>
+          <td>${row.actuel}</td>
+          <td><strong>${row.propose}</strong></td>
+          <td><span class="badge ${row.badge}">${row.ecart}</span></td>
+        </tr>
+      `
+        )
+        .join("");
+
+      // Synthèse DDA
+      const ddaParagraph =
+        `SYNTHÈSE RÉGLEMENTAIRE — DEVOIR DE CONSEIL (Art. L521-4 Code des Assurances)\n\n` +
+        `• Contrats comparés : ${data.actuelNom} (${data.cotActuel} €/mois) vs ${data.proposeNom} (${data.cotPropose} €/mois).\n` +
+        `• Impact budgétaire annuel : ${sign}${deltaAnnuel.toFixed(2)} € / an par salarié.\n` +
+        `• Statut de conformité ANI / Panier 100% Santé : ${data.aniConforme ? "CONFORME aux minima légaux." : "NON CONFORME (Alerte critique ANI-DENT-125 détectée — souscription déconseillée)."}\n` +
+        `• Justification technique : ${
+          data.aniConforme
+            ? "L'évolution tarifaire est directement corrélée au renforcement des remboursements sur les soins courants (consultations spécialistes) et les équipements optique/dentaire, réduisant le reste à charge des salariés."
+            : "Attention : malgré une cotisation inférieure, l'offre proposée ne respecte pas le plancher minimal dentaire de 125% BRSS imposé par le décret ANI, exposant l'entreprise à une requalification sociale URSSAF."
+        }`;
+
+      document.getElementById("ddaText").textContent = ddaParagraph;
+    }
+
+    function copyDdaSynthesis() {
+      const text = document.getElementById("ddaText").textContent;
+      navigator.clipboard.writeText(text).catch(() => {});
+
+      const copies = parseInt(localStorage.getItem("garantia_dda_copies") || "0", 10) + 1;
+      localStorage.setItem("garantia_dda_copies", copies.toString());
+      document.getElementById("copyCount").textContent = copies;
+
+      const toast = document.getElementById("copyToast");
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 2800);
+    }
+
+    function recordPurchaseIntent(planName) {
+      const intents = parseInt(localStorage.getItem("garantia_smoke_intents") || "0", 10) + 1;
+      localStorage.setItem("garantia_smoke_intents", intents.toString());
+      document.getElementById("intentCount").textContent = intents;
+
+      const toast = document.getElementById("intentToast");
+      toast.textContent = `🎉 Demande d'accès (${planName}) ouverte dans votre messagerie !`;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 4000);
+
+      const subject = encodeURIComponent(`Demande Acces GarantIA - ${planName}`);
+      const body = encodeURIComponent(
+        `Bonjour l'équipe GarantIA Studio,\n\nJe souhaite activer un accès prioritaire à GarantIA Studio sur la formule : ${planName}.\n\nCabinet / Entreprise : \nTéléphone : \nVolume mensuel d'études comparatives : \n\nMerci !`
+      );
+      window.location.href = `mailto:contact@garantia-studio.fr?subject=${subject}&body=${body}`;
+    }
+
+    function voteSector(sectorKey, sectorLabel) {
+      const el = document.getElementById("vote_" + sectorKey);
+      const currentVal = parseInt(el.textContent || "10", 10) + 1;
+      localStorage.setItem("vote_" + sectorKey, currentVal.toString());
+      el.textContent = currentVal;
+
+      const badge = document.getElementById("labFeedbackBadge");
+      badge.textContent = `✅ Vote enregistré pour : ${sectorLabel}`;
+    }
+
+    // Initialisation au chargement
+    initCounters();
+    selectScenario(1);
+  </script>
+</body>
+</html>

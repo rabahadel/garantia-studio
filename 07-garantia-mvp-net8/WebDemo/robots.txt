@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rabahadel.github.io/garantia-studio/sitemap.xml

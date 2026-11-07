@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur Remboursement BRSS, Ticket Modérateur & Reste à Charge Optique/Dentaire 2026 | GarantIA</title>
+  <meta name="description" content="Outil gratuit 2026 pour courtiers et assurés : convertissez instantanément un taux % BRSS (100%, 125%, 200%, 300%) en remboursement réel en euros, Ticket Modérateur et Reste à Charge (Optique, Dentaire, Spécialiste)." />
+  <link rel="canonical" href="https://rabahadel.github.io/garantia-studio/calculateur-brss-optique-dentaire.html" />
+  <meta property="og:title" content="Calculateur Remboursement BRSS, Ticket Modérateur & Reste à Charge 2026" />
+  <meta property="og:description" content="Calculez en 1 clic la part Sécurité Sociale (RO), la part Mutuelle (RC) et le Reste à Charge en Euros à partir du % BRSS." />
+  <meta property="og:url" content="https://rabahadel.github.io/garantia-studio/calculateur-brss-optique-dentaire.html" />
+  <meta property="og:type" content="website" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculateur BRSS & Reste à Charge Optique/Dentaire 2026",
+    "url": "https://rabahadel.github.io/garantia-studio/calculateur-brss-optique-dentaire.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #111827;
+      --surface: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #3b82f6;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 4rem;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+    .topbar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .container {
+      max-width: 980px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .lead {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    select, input {
+      width: 100%;
+      padding: 0.65rem 0.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .result-highlight {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .cta-banner {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(99, 102, 241, 0.18));
+      border: 1px solid var(--primary);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: center;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.85rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html">🛡️ GarantIA — Comparateur Mutuelle B2B</a>
+    <a href="index.html" style="color:#60a5fa; font-size:0.9rem;">→ Ouvrir le Comparateur Complet (30s)</a>
+  </header>
+
+  <main class="container">
+    <h1>Calculateur Remboursement BRSS, Ticket Modérateur & Reste à Charge Optique/Dentaire 2026</h1>
+    <p class="lead">
+      Simulez instantanément le remboursement réel en euros (Régime Obligatoire Sécurité Sociale + Complémentaire Santé en % BRSS) et vérifiez le respect du plancher minimal ANI (125% BRSS en dentaire).
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h2 style="font-size:1.1rem; margin-bottom:1rem;">1. Paramètres de l'acte médical</h2>
+        <div class="form-group">
+          <label for="presetActe">Type d'acte (Grille BRSS 2026)</label>
+          <select id="presetActe" onchange="applyPreset()">
+            <option value="31.50|70|85">Consultation Spécialiste Secteur 2 OPTAM (BRSS 31,50 €)</option>
+            <option value="120.00|60|550" selected>Couronne Dentaire Prothèse Hors 100% Santé (BRSS 120,00 €)</option>
+            <option value="26.50|70|50">Consultation Généraliste / Pédiatre (BRSS 26,50 €)</option>
+            <option value="100.00|60|450">Équipement Optique Verres Complexes (BRSS + Forfait)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="brss">Base de Remboursement Sécurité Sociale — BRSS (€)</label>
+          <input type="number" id="brss" value="120.00" step="0.5" oninput="calculateBrss()" />
+        </div>
+        <div class="form-group">
+          <label for="tauxSecu">Taux Sécurité Sociale RO (%)</label>
+          <input type="number" id="tauxSecu" value="60" oninput="calculateBrss()" />
+        </div>
+        <div class="form-group">
+          <label for="tauxMutuelle">Garantie Mutuelle Complémentaire (% BRSS total)</label>
+          <input type="number" id="tauxMutuelle" value="150" step="25" oninput="calculateBrss()" />
+        </div>
+        <div class="form-group">
+          <label for="forfaitEuro">Forfait complémentaire éventuel (€)</label>
+          <input type="number" id="forfaitEuro" value="0" step="25" oninput="calculateBrss()" />
+        </div>
+        <div class="form-group">
+          <label for="fraisReels">Frais réels facturés par le praticien (€)</label>
+          <input type="number" id="fraisReels" value="550" step="10" oninput="calculateBrss()" />
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size:1.1rem; margin-bottom:1rem;">2. Décomposition Euro par Euro</h2>
+        <div class="result-row">
+          <span>Plafond total remboursable (% BRSS + Forfait) :</span>
+          <strong id="resPlafond">180,00 €</strong>
+        </div>
+        <div class="result-row">
+          <span>Part Sécurité Sociale (RO) :</span>
+          <strong id="resSecu" style="color:#60a5fa;">72,00 €</strong>
+        </div>
+        <div class="result-row">
+          <span>Ticket Modérateur (100% BRSS - RO) :</span>
+          <strong id="resTm">48,00 €</strong>
+        </div>
+        <div class="result-row">
+          <span>Part Mutuelle Complémentaire (RC) :</span>
+          <strong id="resMutuelle" style="color:#34d399;">108,00 €</strong>
+        </div>
+        <div class="result-row">
+          <span>Contrôle Plancher ANI Dentaire (125% BRSS) :</span>
+          <strong id="resAni" style="color:#34d399;">✅ Conforme (>= 125%)</strong>
+        </div>
+
+        <div class="result-highlight">
+          <div style="font-size:0.85rem; color:var(--muted);">Reste à charge final pour le salarié (RAC) :</div>
+          <div id="resRac" style="font-size:1.6rem; font-weight:800; margin-top:0.2rem;">370,00 €</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Vous comparez 2 tableaux de garanties complets pour un client entreprise ?</h2>
+      <p style="color:var(--muted); margin-top:0.4rem;">
+        Ne calculez plus ligne par ligne : générez votre comparatif côte-à-côte + contrôle ANI + synthèse Devoir de Conseil DDA en 30 secondes.
+      </p>
+      <a href="index.html" class="btn">🚀 Ouvrir le Simulateur Comparatif GarantIA (Gratuit)</a>
+    </div>
+  </main>
+
+  <script>
+    function applyPreset() {
+      const val = document.getElementById("presetActe").value.split("|");
+      document.getElementById("brss").value = parseFloat(val[0]).toFixed(2);
+      document.getElementById("tauxSecu").value = val[1];
+      document.getElementById("fraisReels").value = val[2];
+      calculateBrss();
+    }
+
+    function calculateBrss() {
+      const brss = parseFloat(document.getElementById("brss").value) || 0;
+      const tauxSecu = parseFloat(document.getElementById("tauxSecu").value) || 0;
+      const tauxMut = parseFloat(document.getElementById("tauxMutuelle").value) || 0;
+      const forfait = parseFloat(document.getElementById("forfaitEuro").value) || 0;
+      const fraisReels = parseFloat(document.getElementById("fraisReels").value) || 0;
+
+      const partSecu = brss * (tauxSecu / 100);
+      const ticketMod = Math.max(0, brss - partSecu);
+      const plafondBrss = brss * (tauxMut / 100) + forfait;
+      const rembTotal = Math.min(fraisReels, plafondBrss);
+      const partMutuelle = Math.max(0, rembTotal - partSecu);
+      const rac = Math.max(0, fraisReels - rembTotal);
+
+      document.getElementById("resPlafond").textContent = plafondBrss.toFixed(2).replace(".", ",") + " €";
+      document.getElementById("resSecu").textContent = partSecu.toFixed(2).replace(".", ",") + " €";
+      document.getElementById("resTm").textContent = ticketMod.toFixed(2).replace(".", ",") + " €";
+      document.getElementById("resMutuelle").textContent = partMutuelle.toFixed(2).replace(".", ",") + " €";
+      document.getElementById("resRac").textContent = rac.toFixed(2).replace(".", ",") + " €";
+
+      const aniEl = document.getElementById("resAni");
+      if (tauxMut < 125) {
+        aniEl.style.color = "#f87171";
+        aniEl.textContent = "🚨 Alerte ANI-DENT-125 (< 125% BRSS)";
+      } else {
+        aniEl.style.color = "#34d399";
+        aniEl.textContent = "✅ Conforme ANI (>= 125% BRSS)";
+      }
+    }
+    calculateBrss();
+  </script>
+</body>
+</html>
